@@ -16,32 +16,18 @@ Output:
 outputs New_Die_A = [?, ?, ?, ?, ?, ?],New_Die_B = [?, ?,?, ?, ?, ?] where,
 ● No New_Die A[x] > 4."""
 
-def calculate_combinations(total_sum):
-    combinations = [0] * (total_sum + 1)
-    combinations[0] = 1
-    for i in range(1, total_sum + 1):
-        combinations[i] = combinations[i - 1] + combinations[i]
-    return combinations
+def undoom_dice(a,b):
+    n_die_a = [min(4, spots) for spots in a]
+    n_die_b = b
 
-def calculate_spots(combinations, die_faces):
-    spots = [0] * len(die_faces)
-    total_sum = sum(die_faces)
-    for i in range(len(die_faces) - 1, -1, -1):
-        while die_faces[i] + spots[i] > total_sum or combinations[total_sum - die_faces[i] - spots[i]] <= 0:
-            spots[i] += 1
-        combinations[total_sum] -= 1
-        total_sum -= die_faces[i] + spots[i]
-    return spots
+    return n_die_a, n_die_b
 
-def undoom_dice(Die_A, Die_B):
-    total_sum = sum(Die_A) + sum(Die_B)
-    combinations = calculate_combinations(total_sum)
-    new_Die_A = calculate_spots(combinations, Die_A)
-    new_Die_B = calculate_spots(combinations, Die_B)
-    return new_Die_A, new_Die_B
 
-Die_A = [1, 2, 3, 4, 5, 6]
-Die_B = [1, 2, 3, 4, 5, 6]
-New_Die_A, New_Die_B = undoom_dice(Die_A, Die_B)
-print("New Die A:", New_Die_A)
-print("New Die B:", New_Die_B)
+a = [1, 2, 3, 4, 5, 6]
+b = [1, 2, 3, 4, 5, 6]
+
+n_die_a, n_die_b = undoom_dice(a, b)
+
+print("Transformed Dice:")
+print(f"New Die A: {n_die_a}")
+print(f"New Die B: {n_die_b}")
